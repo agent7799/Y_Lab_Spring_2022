@@ -7,6 +7,8 @@ import com.edu.ulab.app.mapper.BookMapper;
 import com.edu.ulab.app.mapper.UserMapper;
 import com.edu.ulab.app.service.BookService;
 import com.edu.ulab.app.service.UserService;
+import com.edu.ulab.app.storage.Storage;
+import com.edu.ulab.app.web.request.BookRequest;
 import com.edu.ulab.app.web.request.UserBookRequest;
 import com.edu.ulab.app.web.response.UserBookResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.edu.ulab.app.storage.Storage.getBooksFromStorageByUserID;
 
 @Slf4j
 @Component
@@ -60,13 +64,22 @@ public class UserDataFacade {
     }
 
     public UserBookResponse updateUserWithBooks(UserBookRequest userBookRequest) {
+        for (BookRequest bookRequest : userBookRequest.getBookRequests()) {
+
+        }
+        userBookRequest.getUserRequest();
         return null;
     }
 
     public UserBookResponse getUserWithBooks(Long userId) {
-        return null;
+        return UserBookResponse.builder()
+                .userId(userId)
+                .booksIdList(getBooksFromStorageByUserID(userId))
+                .build();
     }
 
+
     public void deleteUserWithBooks(Long userId) {
+        Storage.deleteUserFromStorage(userId);
     }
 }
