@@ -1,12 +1,11 @@
 package com.edu.ulab.app.storage;
 
 import com.edu.ulab.app.dto.BookDto;
-import com.edu.ulab.app.dto.UserDto;
-
+import org.springframework.stereotype.Component;
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class Storage {
+@Component
+public class BookStorage {
     //todo создать хранилище в котором будут содержаться данные
     // сделать абстракции через которые можно будет производить операции с хранилищем
     // продумать логику поиска и сохранения
@@ -15,58 +14,48 @@ public class Storage {
     // продумать что у узера может быть много книг и нужно создать эту связь
     // так же учесть, что методы хранилища принимают друго тип данных - учесть это в абстракции
 
-
-    private static Storage instance;
-
-    private Storage(){}
-    public static Storage getInstance(){
+    private static BookStorage instance;
+    private BookStorage(){}
+    public static BookStorage getInstance(){
         if (instance == null){
-            instance =  new Storage();
+            instance =  new BookStorage();
         }
         return instance;
     }
-    private static Map<Long, UserDto> usersList = new HashMap<>();
+
     private static Map<Long, BookDto> booksList = new HashMap<>();
 
 
-    public static void addUserToStorage(UserDto userDto){
-        if(!usersList.containsValue(userDto)){
-            usersList.put(userDto.getId(), userDto);
-        }
-    }
-
-    public static UserDto getUserFromStorage(Long id){
-        return usersList.get(id);
-    }
-
-    public static void deleteUserFromStorage(Long id){
-        usersList.remove(id);
-    }
-
-    public static void replaceUserInStorage(long id, UserDto userDto){
-        usersList.replace(id, userDto);
-    }
-
-
-    public static List<Long> getBooksFromStorageByUserID(Long requestedId){
+    public static List<Long> getBooksIdListFromStorageByUserID(Long userId){
         List<Long> foundBooksList = booksList.values().stream()
                 .filter(Objects::nonNull)
                 .map(BookDto::getUserId)
-                .filter(id -> id.equals(requestedId))
+                .filter(id -> id.equals(userId))
                .toList();
         return foundBooksList;
     }
 
-    public static BookDto getBookFromStorageByBookId(Long bookId){
+    public BookDto getBookFromStorageByBookId(Long bookId){
         return booksList.get(bookId);
     }
 
-    public static void addBookToStorage(BookDto bookDto){
+    public void addBookToStorage(long bookId, BookDto bookDto){
         if(!booksList.containsValue(bookDto)){
-            booksList.put(bookDto.getId(), bookDto);
+            booksList.putIfAbsent(bookId, bookDto);
         }
-
     }
 
+    public  void deleteBookFromStorage(long bookId){
+        booksList.entrySet().removeIf(entry -> entry.getValue().getId().equals(bookId));
+    }
+
+    public static void deleteBookFromStorageByUserId(long userId){
+        booksList.entrySet().removeIf(entry -> entry.getValue().getUserId().equals(userId));
+    }
+
+
+    public boolean isBookPresent(BookDto bookDto){
+        return booksList.containsValue(bookDto);
+    }
 
 }
