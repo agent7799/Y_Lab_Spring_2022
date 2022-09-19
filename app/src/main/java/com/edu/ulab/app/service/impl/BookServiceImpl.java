@@ -30,12 +30,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto updateBook(BookDto bookDto) {     // userId is present in bookDto
-        bookDto.getUserId();
-
-
         bookId++;
         bookStorage.updateBookInStorage(bookId, bookDto);
-
         bookDto.setId(bookId);
         return bookDto;
     }

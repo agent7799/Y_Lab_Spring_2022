@@ -6,6 +6,7 @@ import java.util.*;
 
 @Component
 public class BookStorage {
+
     //todo создать хранилище в котором будут содержаться данные
     // сделать абстракции через которые можно будет производить операции с хранилищем
     // продумать логику поиска и сохранения
@@ -43,6 +44,11 @@ public class BookStorage {
         if(!booksList.containsValue(bookDto)){
             booksList.putIfAbsent(bookId, bookDto);
         }
+    }
+
+    public BookDto updateBookInStorage(long bookId, BookDto bookDto){
+        booksList.put(bookId, bookDto);
+        return booksList.get(bookId);
     }
 
     public  void deleteBookFromStorage(long bookId){

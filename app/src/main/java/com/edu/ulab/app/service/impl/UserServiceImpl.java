@@ -1,13 +1,11 @@
 package com.edu.ulab.app.service.impl;
 
 import com.edu.ulab.app.dto.UserDto;
-import com.edu.ulab.app.exception.NotFoundException;
 import com.edu.ulab.app.service.UserService;
 import com.edu.ulab.app.storage.UserStorage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static com.edu.ulab.app.storage.UserStorage.deleteUserFromStorage;
 
 @Slf4j
 @Service
@@ -18,7 +16,6 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl(UserStorage userStorage) {
         this.userStorage = userStorage;
     }
-
 
     // todo сгенерировать идентификатор
     //  создать пользователя

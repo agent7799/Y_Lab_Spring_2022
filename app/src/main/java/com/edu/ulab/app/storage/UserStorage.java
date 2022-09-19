@@ -43,12 +43,7 @@ public class UserStorage {
     }
 
     public static void deleteUserFromStorage(Long userId){
-//        if (usersList.containsKey(userId)) {
-            //usersList.remove(userId, usersList.get(userId));
             usersList.remove(userId);
-//        }else{
-//            throw new NotFoundException("User with id = " + userId + " not found");
-//        }
     }
 
     public UserDto updateUserInStorage(long userId, UserDto userDto){
