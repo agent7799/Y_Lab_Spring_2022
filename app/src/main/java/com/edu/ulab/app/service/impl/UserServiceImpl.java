@@ -26,22 +26,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {    //userDto without userId
-        if (userDto.getId() == null) {
-            //if (!storage.isUserPresent(userDto)) {
-            userId++;
-            userStorage.addUserToStorage(userDto, userId);
-            userDto.setId(userId);
-        }
-
+        userStorage.addUserToStorage(userDto, userId);
+        userDto.setId(userId);
+        userId++;
         return userDto;     //userDto with userId
     }
 
     @Override
     public UserDto updateUser(UserDto userDto, Long userId) {
-        if (userStorage.isUserPresent(userId)) {
-            userStorage.updateUserInStorage(userId, userDto);
-        }
-        throw new NotFoundException("Can not update user, user not found");
+        UserDto returnDto = userStorage.updateUserInStorage(userId, userDto);
+        returnDto.setId(userId);
+        return returnDto;
     }
 
     @Override

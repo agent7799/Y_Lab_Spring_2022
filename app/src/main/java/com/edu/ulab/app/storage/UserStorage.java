@@ -37,25 +37,23 @@ public class UserStorage {
         if (usersList.containsKey(userId)){
             return usersList.get(userId);
         }
-        throw new NotFoundException("User with id = " + userId + " not found");
+        else{
+            throw new NotFoundException("User with id = " + userId + " not found");
+        }
     }
 
     public static void deleteUserFromStorage(Long userId){
-        if (usersList.containsKey(userId)) {
+//        if (usersList.containsKey(userId)) {
+            //usersList.remove(userId, usersList.get(userId));
             usersList.remove(userId);
-        }
-        throw new NotFoundException("User with id = " + userId + " not found");
+//        }else{
+//            throw new NotFoundException("User with id = " + userId + " not found");
+//        }
     }
 
-    public boolean isUserPresent(long userId){
-        return usersList.containsKey(userId);
-    }
-
-    public void updateUserInStorage(long userId, UserDto userDto){
-        if(usersList.containsKey(userId)){
-            usersList.replace(userId, userDto);
-        }
-        throw new NotFoundException("User with id = " + userId + " not found");
+    public UserDto updateUserInStorage(long userId, UserDto userDto){
+            usersList.put(userId, userDto);
+            return usersList.get(userId);
     }
 
 

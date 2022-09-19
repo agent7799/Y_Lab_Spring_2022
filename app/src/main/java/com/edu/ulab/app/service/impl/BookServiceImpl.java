@@ -20,27 +20,23 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto createBook(BookDto bookDto) {       //bookDto with userId, without id
-        if(bookDto.getId() == null){
+        if (bookDto.getId() == null) {
             bookId++;
             bookStorage.addBookToStorage(bookId, bookDto);
-            bookDto.setId(bookId++);
+            bookDto.setId(bookId);
         }
         return bookDto;
     }
 
     @Override
-    public BookDto updateBook(BookDto bookDto) {        // userId is present in bookDto
-        if(bookDto.getId() == null){
-            bookStorage.addBookToStorage(bookId, bookDto);
-            return bookDto;
-        }
-        Long id = bookDto.getId();
-        if(bookDto != null){
-            //getBookFromStorageByBookId(id).setUserId(bookDto.getUserId());
-            bookStorage.getBookFromStorageByBookId(id).setTitle(bookDto.getTitle());
-            bookStorage.getBookFromStorageByBookId(id).setAuthor(bookDto.getAuthor());
-            bookStorage.getBookFromStorageByBookId(id).setPageCount(bookDto.getPageCount());
-        }
+    public BookDto updateBook(BookDto bookDto) {     // userId is present in bookDto
+        bookDto.getUserId();
+
+
+        bookId++;
+        bookStorage.updateBookInStorage(bookId, bookDto);
+
+        bookDto.setId(bookId);
         return bookDto;
     }
 
@@ -53,7 +49,6 @@ public class BookServiceImpl implements BookService {
     public void deleteBookById(Long id) {
         bookStorage.deleteBookFromStorage(id);
     }
-
 
 
 }

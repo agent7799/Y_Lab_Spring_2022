@@ -26,11 +26,11 @@ public class BookStorage {
     private static Map<Long, BookDto> booksList = new HashMap<>();
 
 
-    public static List<Long> getBooksIdListFromStorageByUserID(Long userId){
+    public static List<Long> getBooksIdListFromStorageByUserID(Long requestedUserId){
         List<Long> foundBooksList = booksList.values().stream()
                 .filter(Objects::nonNull)
-                .map(BookDto::getUserId)
-                .filter(id -> id.equals(userId))
+                .filter(bookDto -> bookDto.getUserId().equals(requestedUserId))
+                .map(bookDto -> bookDto.getId())
                .toList();
         return foundBooksList;
     }
@@ -53,9 +53,5 @@ public class BookStorage {
         booksList.entrySet().removeIf(entry -> entry.getValue().getUserId().equals(userId));
     }
 
-
-    public boolean isBookPresent(BookDto bookDto){
-        return booksList.containsValue(bookDto);
-    }
 
 }
