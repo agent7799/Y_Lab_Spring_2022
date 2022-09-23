@@ -43,6 +43,11 @@ public class UserController {
 
     //@PutMapping(value = "/update")
     @PutMapping(value = "/update/{userId}")
+    @Operation(summary = "Update user book row.",
+            responses = {
+                    @ApiResponse(description = "User book",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = UserBookResponse.class)))})
     //public UserBookResponse updateUserWithBooks(@RequestBody UserBookRequest request) {
     public UserBookResponse updateUserWithBooks(@RequestBody UserBookRequest request, @PathVariable Long userId) {
         UserBookResponse response = userDataFacade.updateUserWithBooks(request, userId);
