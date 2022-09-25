@@ -6,6 +6,10 @@ import com.edu.ulab.app.mapper.BookMapper;
 import com.edu.ulab.app.mapper.UserMapper;
 import com.edu.ulab.app.service.BookService;
 import com.edu.ulab.app.service.UserService;
+import com.edu.ulab.app.service.impl.BookServiceImpl;
+import com.edu.ulab.app.service.impl.BookServiceStorageImpl;
+import com.edu.ulab.app.service.impl.UserServiceImpl;
+import com.edu.ulab.app.service.impl.UserServiceStorageImpl;
 import com.edu.ulab.app.storage.BookStorage;
 import com.edu.ulab.app.storage.UserStorage;
 import com.edu.ulab.app.web.request.UserBookRequest;
@@ -21,15 +25,21 @@ import static com.edu.ulab.app.storage.BookStorage.getBooksIdListFromStorageByUs
 @Slf4j
 @Component
 public class UserDataFacade {
-    private final UserService userService;
-    private final BookService bookService;
+
+//    private final UserServiceStorageImpl userService;
+//    private final BookServiceStorageImpl bookService;
+    private final UserServiceImpl userService;
+    private final BookServiceImpl bookService;
+
     private final UserMapper userMapper;
     private final BookMapper bookMapper;
 
-    public UserDataFacade(UserService userService,
-                          BookService bookService,
-                          UserMapper userMapper,
-                          BookMapper bookMapper) {
+//    public UserDataFacade(UserServiceStorageImpl userService,
+//                          BookServiceStorageImpl bookService,
+  public UserDataFacade(UserServiceImpl userService,
+                        BookServiceImpl bookService,
+                        UserMapper userMapper,
+                        BookMapper bookMapper) {
         this.userService = userService;
         this.bookService = bookService;
         this.userMapper = userMapper;
@@ -66,7 +76,6 @@ public class UserDataFacade {
         log.info("Got user book update request: {}", userBookRequest);
         UserDto userDto = userMapper.userRequestToUserDto(userBookRequest.getUserRequest());
         log.info("Mapped user request: {}", userDto);
-
         UserDto updatedUser = userService.updateUser(userDto, userId);
         log.info("Updated user: {}", updatedUser);
 
@@ -90,6 +99,7 @@ public class UserDataFacade {
     }
 
     public UserBookResponse getUserWithBooks(Long userId) {
+
         return UserBookResponse.builder()
                 .userId(userId)
                 .booksIdList(getBooksIdListFromStorageByUserID(userId))
