@@ -7,23 +7,21 @@ import javax.persistence.*;
 
 @Data
 @Entity
-//@Table(name = "perons")
+@Table(name = "person")
 public class UserEntity {
 
-//    public PersonEntity() {
-//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column
+    @Column(name = "fullName")
     private String fullName;
 
-//    @Column
+    @Column(name = "title")
     private String title;
 
-//    @Column
+    @Column(name = "age")
     private int age;
 
 }

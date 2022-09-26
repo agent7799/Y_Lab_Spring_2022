@@ -5,7 +5,9 @@ import com.edu.ulab.app.dto.UserDto;
 import com.edu.ulab.app.mapper.BookMapper;
 import com.edu.ulab.app.mapper.UserMapper;
 import com.edu.ulab.app.service.BookService;
+import com.edu.ulab.app.service.impl.BookServiceDbImpl;
 import com.edu.ulab.app.service.impl.BookServiceImpl;
+import com.edu.ulab.app.service.impl.UserServiceDbImpl;
 import com.edu.ulab.app.service.impl.UserServiceImpl;
 import com.edu.ulab.app.storage.BookStorage;
 import com.edu.ulab.app.storage.UserStorage;
@@ -25,9 +27,12 @@ public class UserDataFacade {
 //    private final BookServiceStorageImpl bookService;
 
     //implementation of storage with CrudRepository
-    private final UserServiceImpl userService;
-    private final BookServiceImpl bookService;
+//    private final UserServiceImpl userService;
+//    private final BookServiceImpl bookService;
 
+    //implementation of storage with DB
+    private final UserServiceDbImpl userService;
+    private final BookServiceDbImpl bookService;
 
     private final UserMapper userMapper;
     private final BookMapper bookMapper;
@@ -38,10 +43,17 @@ public class UserDataFacade {
 //                          BookServiceStorageImpl bookService,
 
     //implementation of storage with CrudRepository
-  public UserDataFacade(UserServiceImpl userService,
-                        BookServiceImpl bookService,
-                        UserMapper userMapper,
-                        BookMapper bookMapper) {
+//    public UserDataFacade(UserServiceImpl userService,
+//                          BookServiceImpl bookService,
+
+//implementation of storage with DB
+    public UserDataFacade(UserServiceDbImpl userService,
+                          BookServiceDbImpl bookService,
+
+    UserMapper userMapper,
+    BookMapper bookMapper)
+
+    {
         this.userService = userService;
         this.bookService = bookService;
         this.userMapper = userMapper;
@@ -108,9 +120,11 @@ public class UserDataFacade {
 
 
     public void deleteUserWithBooks(Long userId) {
-      //for using with local Storage
+        //implementation with local Storage
 //        UserStorage.deleteUserFromStorage(userId);
 //        BookStorage.deleteBookFromStorageByUserId(userId);
+
+        //implementation with repository
         userService.deleteUserById(userId);
         bookService.deleteBookById(userId);
     }

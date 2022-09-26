@@ -1,6 +1,7 @@
 package com.edu.ulab.app.service.impl;
 
 import com.edu.ulab.app.dto.UserDto;
+import com.edu.ulab.app.exception.NotFoundException;
 import com.edu.ulab.app.service.UserService;
 import com.edu.ulab.app.storage.UserStorage;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,6 @@ public class UserServiceStorageImpl implements UserService {
 
     @Override
     public UserDto createUser(UserDto userDto) {    //userDto without userId
-
         userStorage.addUserToStorage(userDto, userId);
         userDto.setId(userId);
         userId++;
@@ -41,15 +41,20 @@ public class UserServiceStorageImpl implements UserService {
 
     @Override
     public UserDto getUserById(Long userId) {
-        UserDto foundUser = userStorage.getUserFromStorage(userId);
-        log.info("User found: {}", foundUser);
-        return foundUser;
+        if(userStorage.getUserFromStorage(userId) != null){
+            UserDto foundUser = userStorage.getUserFromStorage(userId);
+            log.info("User found: {}", foundUser);
+            return foundUser;
+        }else throw new NotFoundException("No user with id = " + userId + " is  found!");
+
     }
 
     @Override
     public void deleteUserById(Long id) {
-        UserDto deletedUser = userStorage.getUserFromStorage(userId);
-        userStorage.deleteUserFromStorage(id);
-        log.info("User deleted: {}", deletedUser);
+        if(userStorage.getUserFromStorage(userId) != null) {
+            UserDto deletedUser = userStorage.getUserFromStorage(userId);
+            userStorage.deleteUserFromStorage(id);
+            log.info("User deleted: {}", deletedUser);
+        }else throw new NotFoundException("No user with id = " + userId + " is  found!");
     }
 }

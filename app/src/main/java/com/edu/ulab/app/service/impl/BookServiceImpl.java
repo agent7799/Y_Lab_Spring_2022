@@ -15,8 +15,8 @@ import java.util.*;
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
-
     private final BookMapper bookMapper;
+
 
     public BookServiceImpl(BookRepository bookRepository, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
@@ -35,9 +35,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto updateBook(BookDto bookDto) {
         BookEntity bookEntity = bookMapper.bookDtoToBookEntity(bookDto);
-
         bookRepository.save(bookEntity);
-
+        log.info("Book {} with id: {} updated in storage.", bookDto);
         return bookMapper.bookEntityToBookDto(bookEntity);
 
     }

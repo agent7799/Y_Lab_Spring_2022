@@ -38,8 +38,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto updateUser(UserDto userDto, Long userId) {
         UserEntity newUser = userMapper.userDtoToUserEntity(userDto);
+
         newUser.setId(userId);
         userRepository.save(newUser);
+        log.info("User {} updated", newUser);
         return userMapper.userEntityToUserDto(newUser);
     }
 
@@ -49,7 +51,7 @@ public class UserServiceImpl implements UserService {
             Optional<UserEntity> userEntity = Optional.of(userRepository.findById(userId).orElseThrow());
             log.info("Mapped userEntity: {}", userEntity.get());
             return userMapper.userEntityToUserDto(userEntity.orElseThrow());
-        }else throw new NotFoundException("No user with id = " + userId + " found!");
+        }else throw new NotFoundException("No user with id = " + userId + " is found!");
     }
 
     @Override
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
             log.info("Deleting User {} with id: {} ", userEntity, id);
             userRepository.delete(userEntity.orElseThrow());
             log.info("User with id: {} is {}", id, userRepository.findById(id));
-        }else throw new NotFoundException("No user with id = " + id + " found!");
+        }else throw new NotFoundException("No user with id = " + id + " is found!");
 
     }
 }

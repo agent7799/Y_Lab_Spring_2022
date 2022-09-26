@@ -8,6 +8,7 @@
     </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-jdbc/5.3.22/spring-jdbc-5.3.22-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-jdbc/5.3.22/spring-jdbc-5.3.22.jar!/" />
     </SOURCES>
   </library>
 </component>

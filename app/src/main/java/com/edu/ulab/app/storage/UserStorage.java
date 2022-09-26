@@ -29,18 +29,11 @@ public class UserStorage {
     private static Map<Long, UserDto> usersList = new HashMap<>();
 
     public void addUserToStorage(UserDto userDto, long userId){
-        if(!usersList.containsValue(userDto)){
             usersList.put(userId, userDto);
-        }
     }
 
     public UserDto getUserFromStorage(Long userId){
-        if (usersList.containsKey(userId)){
             return usersList.get(userId);
-        }
-        else{
-            throw new NotFoundException("User with id = " + userId + " not found");
-        }
     }
 
     public static void deleteUserFromStorage(Long userId){

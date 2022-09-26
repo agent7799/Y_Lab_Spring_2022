@@ -7,21 +7,22 @@ import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "book")
 public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "userId")
+    @Column(name = "userId")
     private Long userId;
 
-//    @Column
+    @Column(name = "title")
     private String title;
 
-//    @Column
+    @Column(name = "author")
     private String author;
 
-//    @Column
+    @Column(name = "pageCount")
     private long pageCount;
 }

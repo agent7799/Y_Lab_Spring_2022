@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -50,11 +49,13 @@ public class BookServiceDbImpl implements BookService {
 
     @Override
     public BookDto updateBook(BookDto userDto) {
+        final String UPDATE_SQL = "UPDATE INTO BOOK(TITLE, AUTHOR, PAGE_COUNT, USER_ID) VALUES (?,?,?,?)";
         return null;
     }
 
     @Override
     public BookDto getBookById(Long id) {
+
         return null;
     }
 
