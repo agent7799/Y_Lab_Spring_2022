@@ -67,5 +67,6 @@ public class UserController {
     public void deleteUserWithBooks(@PathVariable Long userId) {
         log.info("Delete user and his books:  userId {}", userId);
         userDataFacade.deleteUserWithBooks(userId);
+
     }
 }
