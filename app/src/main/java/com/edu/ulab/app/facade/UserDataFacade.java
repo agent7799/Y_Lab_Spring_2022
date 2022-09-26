@@ -4,13 +4,8 @@ import com.edu.ulab.app.dto.BookDto;
 import com.edu.ulab.app.dto.UserDto;
 import com.edu.ulab.app.mapper.BookMapper;
 import com.edu.ulab.app.mapper.UserMapper;
-import com.edu.ulab.app.service.BookService;
-import com.edu.ulab.app.service.impl.BookServiceDbImpl;
 import com.edu.ulab.app.service.impl.BookServiceImpl;
-import com.edu.ulab.app.service.impl.UserServiceDbImpl;
 import com.edu.ulab.app.service.impl.UserServiceImpl;
-import com.edu.ulab.app.storage.BookStorage;
-import com.edu.ulab.app.storage.UserStorage;
 import com.edu.ulab.app.web.request.UserBookRequest;
 import com.edu.ulab.app.web.response.UserBookResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -27,12 +22,12 @@ public class UserDataFacade {
 //    private final BookServiceStorageImpl bookService;
 
     //implementation of storage with CrudRepository
-//    private final UserServiceImpl userService;
-//    private final BookServiceImpl bookService;
+    private final UserServiceImpl userService;
+    private final BookServiceImpl bookService;
 
     //implementation of storage with DB
-    private final UserServiceDbImpl userService;
-    private final BookServiceDbImpl bookService;
+//    private final UserServiceDbImpl userService;
+//    private final BookServiceDbImpl bookService;
 
     private final UserMapper userMapper;
     private final BookMapper bookMapper;
@@ -43,12 +38,12 @@ public class UserDataFacade {
 //                          BookServiceStorageImpl bookService,
 
     //implementation of storage with CrudRepository
-//    public UserDataFacade(UserServiceImpl userService,
-//                          BookServiceImpl bookService,
+    public UserDataFacade(UserServiceImpl userService,
+                          BookServiceImpl bookService,
 
 //implementation of storage with DB
-    public UserDataFacade(UserServiceDbImpl userService,
-                          BookServiceDbImpl bookService,
+//    public UserDataFacade(UserServiceDbImpl userService,
+//                          BookServiceDbImpl bookService,
 
     UserMapper userMapper,
     BookMapper bookMapper)
