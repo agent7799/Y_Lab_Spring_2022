@@ -3,6 +3,7 @@ package com.edu.ulab.app.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Data
@@ -13,6 +14,7 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
 
     @Column(name = "fullName")

@@ -1,7 +1,6 @@
 package com.edu.ulab.app.service.impl;
 
 import com.edu.ulab.app.dto.BookDto;
-import com.edu.ulab.app.entity.BookEntity;
 import com.edu.ulab.app.service.BookService;
 import com.edu.ulab.app.storage.BookStorage;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +55,9 @@ public class BookServiceStorageImpl implements BookService {
 
     @Override
     public List<Long> getBooksListById(Long id) {
+        log.info("deleteUserById: deleting user with id: {}", id);
        return bookStorage.getBooksIdListFromStorageByUserID(id);
+
     }
 
 

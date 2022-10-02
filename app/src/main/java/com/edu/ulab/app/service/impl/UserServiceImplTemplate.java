@@ -32,28 +32,32 @@ public class UserServiceImplTemplate implements UserService {
 
     public UserDto createUser(UserDto userDto) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        this.jdbcTemplate.update((connection) -> {
+        jdbcTemplate.update((connection) -> {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO PERSON(FULL_NAME, TITLE, AGE) VALUES (?,?,?)", new String[]{"id"});
             ps.setString(1, userDto.getFullName());
             ps.setString(2, userDto.getTitle());
             ps.setLong(3, (long)userDto.getAge());
             return ps;
         }, keyHolder);
-        userDto.setId(((Number)Objects.requireNonNull(keyHolder.getKey())).longValue());
+        userDto.setId((Objects.requireNonNull(keyHolder.getKey())).longValue());
         log.info("UserServiceImplTemplate: {}", userDto);
         return userDto;
     }
 
     public UserDto updateUser(UserDto userDto, Long userId) {
-        this.jdbcTemplate.update("UPDATE PERSON SET FULL_NAME=?, TITLE=?, AGE=? WHERE id=?", new Object[]{userDto.getFullName(), userDto.getTitle(), userDto.getAge(), userId});
-        return this.getUserById(userId);
+        final String UPDATE_SQL = "UPDATE PERSON SET FULL_NAME=?, TITLE=?, AGE=?  WHERE ID=?";
+        jdbcTemplate.update(UPDATE_SQL, userDto.getFullName(), userDto.getTitle(), userDto.getAge(), userId);
+        return getUserById(userId);
     }
 
     public UserDto getUserById(Long id) {
-        return this.userMapper.userEntityToUserDto((UserEntity)this.jdbcTemplate.queryForObject("SELECT * FROM PERSON WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper()));
+        return userMapper.userEntityToUserDto(jdbcTemplate.queryForObject("SELECT * FROM PERSON WHERE ID=?",
+                new Object[]{id}, new BeanPropertyRowMapper<>(UserEntity.class)));
     }
 
     public void deleteUserById(Long id) {
-        this.jdbcTemplate.update("DELETE FROM PERSON WHERE id=?", new Object[]{id});
+        String DELETE_SQL = "DELETE FROM PERSON WHERE ID=?";
+        jdbcTemplate.update(DELETE_SQL, new Object[]{id});
+        log.info("deleteUserById: deleting user with id: {}", id);
     }
 }

@@ -3,6 +3,7 @@ package com.edu.ulab.app.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 
 @Data
@@ -12,6 +13,7 @@ public class BookEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
     private Long id;
 
     @Column(name = "userId")
@@ -25,4 +27,5 @@ public class BookEntity {
 
     @Column(name = "pageCount")
     private long pageCount;
+
 }

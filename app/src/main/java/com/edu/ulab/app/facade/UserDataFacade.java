@@ -108,10 +108,13 @@ public class UserDataFacade {
     }
 
     public UserBookResponse getUserWithBooks(Long userId) {
-        return UserBookResponse.builder()
+        UserBookResponse response = UserBookResponse.builder()
                 .userId(userId)
                 .booksIdList(bookService.getBooksListById(userId))
                 .build();
+        log.info("getUserWithBooks:  response: {}", response);
+        return response;
+
     }
 
 
