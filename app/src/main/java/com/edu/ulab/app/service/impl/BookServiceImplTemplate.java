@@ -57,6 +57,7 @@ public class BookServiceImplTemplate implements BookService {
     }
 
     public BookDto updateBook(BookDto bookDto) {
+        userServiceImplTemplate.isUserFound(bookDto.getUserId());
         log.info("updateBook: bookDto: {} ", bookDto);
         final String UPDATE_SQL = "UPDATE BOOK SET USER_ID=?, TITLE=?, AUTHOR=?, PAGE_COUNT=?  WHERE USER_ID = ?";
         jdbcTemplate.update(UPDATE_SQL, bookDto.getUserId(), bookDto.getTitle(),
@@ -82,6 +83,7 @@ public class BookServiceImplTemplate implements BookService {
     }
 
     public List<Long> getBooksListById(Long id) {
+        //userServiceImplTemplate.isUserFound(id);
         final String GET_BOOKS_SQL = "SELECT ALL ID FROM BOOK WHERE USER_ID=?";
         List<Long> ids =  jdbcTemplate.queryForList(GET_BOOKS_SQL, Long.class, id);
         log.info("Books ID's list for user {} : {}", id, ids);

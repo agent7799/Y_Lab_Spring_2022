@@ -124,7 +124,7 @@ public class UserDataFacade {
 //        UserStorage.deleteUserFromStorage(userId);
 //        BookStorage.deleteBookFromStorageByUserId(userId);
 
-        //implementation with repository
+        //implementation with repository/Jdbc
         userService.deleteUserById(userId);
         bookService.deleteBookById(userId);
     }
