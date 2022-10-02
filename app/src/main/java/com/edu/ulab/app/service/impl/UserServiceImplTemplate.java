@@ -47,11 +47,13 @@ public class UserServiceImplTemplate implements UserService {
     public UserDto updateUser(UserDto userDto, Long userId) {
         final String UPDATE_SQL = "UPDATE PERSON SET FULL_NAME=?, TITLE=?, AGE=?  WHERE ID=?";
         jdbcTemplate.update(UPDATE_SQL, userDto.getFullName(), userDto.getTitle(), userDto.getAge(), userId);
-        return getUserById(userId);
+        UserDto updatedUserDto = getUserById(userId);
+        return updatedUserDto;
     }
 
     public UserDto getUserById(Long id) {
-        return userMapper.userEntityToUserDto(jdbcTemplate.queryForObject("SELECT * FROM PERSON WHERE ID=?",
+        final String GET_SQL = "SELECT * FROM PERSON WHERE ID=?";
+        return userMapper.userEntityToUserDto(jdbcTemplate.queryForObject(GET_SQL,
                 new Object[]{id}, new BeanPropertyRowMapper<>(UserEntity.class)));
     }
 

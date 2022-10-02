@@ -88,6 +88,7 @@ public class UserDataFacade {
         log.info("Mapped user request: {}", userDto);
         UserDto updatedUser = userService.updateUser(userDto, userId);
         log.info("Updated user: {}", updatedUser);
+        bookService.deleteBookById(updatedUser.getId());
 
         List<Long> bookIdList = userBookRequest.getBookRequests()
                 .stream()
@@ -95,8 +96,8 @@ public class UserDataFacade {
                 .map(bookMapper::bookRequestToBookDto)
                 .peek(bookDto -> bookDto.setUserId(updatedUser.getId()))
                 .peek(mappedBookDto -> log.info("mapped book: {}", mappedBookDto))
-                .map(bookService::updateBook)
-                .peek(updateBook -> log.info("Updated book: {}", updateBook))
+                .map(bookService::createBook)
+                .peek(createdBook -> log.info("Created book: {}", createdBook))
                 .map(BookDto::getId)
                 .toList();
         log.info("Collected book ids: {}", bookIdList);
